@@ -1,0 +1,17 @@
+<h1>Profile</h1>
+<p>Du hast {{ subscriberCount }} Abonnenten.</p>
+
+<hr>
+
+<h2>Subscribe to Users</h2>
+<div *ngIf="success">
+    {{ success }}
+</div>
+<div *ngIf="error" style="color: red;">
+    {{ error }}
+</div>
+<form (ngSubmit)="onSubmit()">
+    <input type="text" [(ngModel)]="subscribeForm.server" name="server" placeholder="Server" required>
+    <input type="text" [(ngModel)]="subscribeForm.creatorName" name="creatorName" placeholder="Username" required>
+    <button type="submit">Abonnieren</button>
+</form>

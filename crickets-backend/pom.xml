@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.example</groupId>
+        <artifactId>crickets-jee</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>crickets-backend</artifactId>
+    <packaging>war</packaging>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <dependencyManagement>
+
+        <dependencies>
+
+            <dependency>
+                <groupId>org.eclipse.microprofile</groupId>
+                <artifactId>microprofile</artifactId>
+                <version>5.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>jakarta.platform</groupId>
+                <artifactId>jakarta.jakartaee-bom</artifactId>
+                <version>10.0.0</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+
+        <!-- MicroProfile REST Client -->
+        <dependency>
+            <groupId>org.eclipse.microprofile.rest.client</groupId>
+            <artifactId>microprofile-rest-client-api</artifactId>
+        </dependency>
+
+        <!-- Security API -->
+        <dependency>
+            <groupId>jakarta.security.enterprise</groupId>
+            <artifactId>jakarta.security.enterprise-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- Servlet API -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- WebSocket API -->
+        <dependency>
+            <groupId>jakarta.websocket</groupId>
+            <artifactId>jakarta.websocket-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.websocket</groupId>
+            <artifactId>jakarta.websocket-client-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JSON-B for JSON processing -->
+        <dependency>
+            <groupId>jakarta.json.bind</groupId>
+            <artifactId>jakarta.json.bind-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- WS RS API -->
+        <dependency>
+            <groupId>jakarta.ws.rs</groupId>
+            <artifactId>jakarta.ws.rs-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- CDI API -->
+        <dependency>
+            <groupId>jakarta.enterprise</groupId>
+            <artifactId>jakarta.enterprise.cdi-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- EJB API -->
+        <dependency>
+            <groupId>jakarta.ejb</groupId>
+            <artifactId>jakarta.ejb-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JMS API -->
+        <dependency>
+            <groupId>jakarta.jms</groupId>
+            <artifactId>jakarta.jms-api</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- JBoss Logging -->
+        <dependency>
+            <groupId>org.jboss.logging</groupId>
+            <artifactId>jboss-logging</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-naming-client</artifactId>
+            <version>2.0.1.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jboss</groupId>
+            <artifactId>jboss-ejb-client</artifactId>
+            <version>5.0.8.Final</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+</project>

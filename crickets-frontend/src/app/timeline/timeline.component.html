@@ -1,0 +1,52 @@
+<h1>Timeline</h1>
+
+<ul class="posts">
+    <li *ngFor="let post of timeline" class="post">
+        <div class="post-header">
+            <span class="post-username">{{ post.creatorName }}</span>
+            <span class="post-date">{{ post.createdAt | date:'short' }}</span>
+        </div>
+        <div class="post-content">{{ post.content }}</div>
+        <div class="post-likes">
+            Likes: {{ post.likes }} ({{ post.id }})
+            <button (click)="likePost(post)">Like</button>
+        </div>
+    </li>
+</ul>
+
+<hr>
+
+<div *ngIf="errorPost" style="color: red;">
+    {{ errorPost }}
+</div>
+
+<div>
+    <h2>Neuer Post</h2>
+    <form (ngSubmit)="createPost()">
+        <input type="text" [(ngModel)]="newPostContent" name="content" placeholder="Inhalt">
+        <button type="submit">Posten</button>
+    </form>
+</div>
+
+<hr>
+
+<div>
+    <h2>Suche</h2>
+    <form (ngSubmit)="searchPosts()">
+        <input type="text" [(ngModel)]="searchServer" name="searchServer" placeholder="Server" required>
+        <input type="text" [(ngModel)]="searchQuery" name="searchQuery" placeholder="Suchbegriff">
+        <button type="submit">Suchen</button>
+    </form>
+    <div *ngIf="errorSearch" style="color: red;">
+        {{ errorSearch }}
+    </div>
+    <ul class="posts">
+        <li *ngFor="let post of searchResults" class="post">
+            <div class="post-header">
+                <span class="post-username">{{ post.creatorName }}</span>
+                <span class="post-date">{{ post.createdAt | date:'short' }}</span>
+            </div>
+            <div class="post-content">{{ post.content }}</div>
+        </li>
+    </ul>
+</div>

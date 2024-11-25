@@ -1,0 +1,6 @@
+/subsystem=elytron/properties-realm=ExampleRealm:add(groups-attribute=groups,groups-properties={path=example-roles.properties,relative-to=jboss.server.config.dir},users-properties={path=example-users.properties,relative-to=jboss.server.config.dir,plain-text=true})
+
+/subsystem=elytron/security-domain=ExampleDomain:add(realms=[{realm=ExampleRealm,role-decoder=groups-to-roles}],default-realm=ExampleRealm,permission-mapper=default-permission-mapper)
+
+/subsystem=undertow/application-security-domain=other:add(security-domain=ExampleDomain)
+/subsystem=ejb3/application-security-domain=other:write-attribute(name=security-domain, value=ExampleDomain)

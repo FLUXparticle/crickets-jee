@@ -1,0 +1,16 @@
+<h1>Chat</h1>
+<div class="messages">
+    <div *ngFor="let message of messages" class="message">
+        <span class="username">{{ message.creator_name || 'Unbekannt' }}</span>
+        <span class="content">{{ message.content }}</span>
+        <span class="timestamp">{{ message.created_at || 'Unbekannte Zeit' }}</span>
+    </div>
+</div>
+
+<hr>
+
+<div>
+    <h2>Neue Nachricht</h2>
+    <input type="text" [(ngModel)]="newMessage" (keydown.enter)="sendMessage()" placeholder="Text"/>
+    <button (click)="sendMessage()">Senden</button>
+</div>

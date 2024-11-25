@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.example</groupId>
+    <artifactId>crickets-jee</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>crickets-backend</module>
+        <module>crickets-frontend</module>
+        <module>crickets-deployment</module>
+    </modules>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+
+        <version.wildfly>34.0.0.Final</version.wildfly>
+        <version.wildfly.jar.maven.plugin>11.0.2.Final</version.wildfly.jar.maven.plugin>
+        <version.junit5>5.10.1</version.junit5>
+    </properties>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <!-- Compiler Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                    <configuration>
+                        <source>${java.version}</source>
+                        <target>${java.version}</target>
+                    </configuration>
+                </plugin>
+
+                <!-- WAR Plugin -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <version>3.4.0</version>
+                </plugin>
+
+                <!-- WildFly Maven Plugin für Bootable JAR -->
+                <plugin>
+                    <groupId>org.wildfly.plugins</groupId>
+                    <artifactId>wildfly-jar-maven-plugin</artifactId>
+                    <version>${version.wildfly.jar.maven.plugin}</version>
+                    <configuration>
+                        <skip>true</skip>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+    </build>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-ee-with-tools</artifactId>
+                <version>${version.wildfly}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.junit</groupId>
+                <artifactId>junit-bom</artifactId>
+                <version>${version.junit5}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+</project>
