@@ -55,4 +55,8 @@ export class ChatService {
             console.error('WebSocket is not open');
         }
     }
+
+    closeSocket() {
+     this.ws.close()
+    }
 }

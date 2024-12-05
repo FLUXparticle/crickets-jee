@@ -18,6 +18,10 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  ngOnDestroy() {
+      this.chatService.closeSocket()
+  }
+
   sendMessage() {
     this.chatService.sendMessage(this.newMessage);
     this.newMessage = '';
