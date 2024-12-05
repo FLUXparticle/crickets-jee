@@ -1,15 +1,16 @@
 # Messaging-Subsystem aktivieren (falls nicht vorhanden)
 # /subsystem=messaging-activemq/server=default:add
 
-# Remote-Connector hinzufügen (auf den anderen Server auf localhost:8080 zeigen)
-/subsystem=messaging-activemq/server=default/remote-connector=remote-broker:add(socket-binding=remote-broker-socket)
 # Socket-Binding für den Remote-Broker hinzufügen
 /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-broker:add(host=localhost,port=8080)
-/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-broker:add(host=127.0.0.1,port=8080)
+
+# Remote-Connector hinzufügen (auf den anderen Server auf localhost:8080 zeigen)
+/subsystem=messaging-activemq/server=default/remote-connector=remote-broker:add(socket-binding=remote-broker)
 
 # Pooled Connection Factory konfigurieren
 # /subsystem=messaging-activemq/server=default/pooled-connection-factory=remoteConnectionFactory:add(connectors=[remote-broker],entries=["java:/jms/RemoteConnectionFactory"])
-/subsystem=messaging-activemq/server=default/pooled-connection-factory=RemoteConnectionFactory:add(entries=["java:/RemoteConnectionFactory","java:jboss/exported/jms/RemoteConnectionFactory"],connectors=["http-connector"])
+# /subsystem=messaging-activemq/server=default/pooled-connection-factory=RemoteConnectionFactory:add(entries=["java:/RemoteConnectionFactory","java:jboss/exported/jms/RemoteConnectionFactory"],connectors=["http-connector"])
+/subsystem=messaging-activemq/server=default/pooled-connection-factory=RemoteConnectionFactory:add(entries=["java:/RemoteConnectionFactory","java:jboss/exported/jms/RemoteConnectionFactory"],connectors=["remote-broker"])
 
 # JMS-Queue hinzufügen (falls benötigt)
 # /subsystem=messaging-activemq/server=default/jms-queue=testQueue:add(entries=["java:/jms/queue/test", "java:jboss/exported/jms/queue/test"])
