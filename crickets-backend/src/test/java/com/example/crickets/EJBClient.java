@@ -1,5 +1,8 @@
 package com.example.crickets;
 
+import com.example.crickets.data.*;
+import com.example.crickets.service.*;
+
 import javax.naming.*;
 import java.util.*;
 
@@ -12,9 +15,9 @@ public class EJBClient {
 
         try {
             InitialContext context = new InitialContext(props);
-            // TimelineRemoteService bean = (TimelineRemoteService) context.lookup("ejb:/ROOT/TimelineRemoteServiceImpl!com.example.crickets.service.TimelineRemoteService");
-            // List<Post> ll = bean.search("ll");
-            // System.out.println(ll);
+            TimelineRemoteService bean = (TimelineRemoteService) context.lookup("ejb:/ROOT/TimelineRemoteServiceImpl!com.example.crickets.service.TimelineRemoteService");
+            List<Post> ll = bean.search("ll");
+            System.out.println(ll);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

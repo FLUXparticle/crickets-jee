@@ -5,6 +5,11 @@ import com.example.crickets.data.*;
 import com.example.crickets.repository.*;
 import jakarta.enterprise.context.*;
 import jakarta.inject.*;
+import org.eclipse.microprofile.rest.client.*;
+
+import java.net.*;
+
+import static com.example.crickets.resource.InternalResource.*;
 
 @ApplicationScoped
 public class ProfileService {
@@ -29,7 +34,7 @@ public class ProfileService {
             return subscribeLocal(subscriber, creatorName);
         } else {
             // Remote Subscription über REST
-            // TODO subscribeRemote(creatorServer, creatorName, subscriber);
+            subscribeRemote(creatorServer, creatorName, subscriber);
 
             User creator = new User(creatorName, creatorServer);
             subscriptionRepository.save(new Subscription(creator, subscriber));
@@ -46,6 +51,23 @@ public class ProfileService {
         }
         subscriptionRepository.save(new Subscription(creator, subscriber));
         return "Successfully subscribed to user '" + creator.getUsername() + "'";
+    }
+
+    private void subscribeRemote(String creatorServer, String creatorName, User subscriber) throws Exception {
+        String baseUri = "http://%s:%s/rest/internal".formatted("localhost", creatorServer);
+        InternalServiceClient internalServiceClient = RestClientBuilder.newBuilder()
+                .baseUri(new URI(baseUri))
+                .build(InternalServiceClient.class);
+
+        SubscribeRequest request = new SubscribeRequest();
+        request.setSubscriber(subscriber);
+        request.setCreatorName(creatorName);
+
+        SubscribeResponse response = internalServiceClient.subscribe(request);
+
+        if (response.getError() != null && !response.getError().isEmpty()) {
+            throw new Exception(response.getError());
+        }
     }
 
 }
