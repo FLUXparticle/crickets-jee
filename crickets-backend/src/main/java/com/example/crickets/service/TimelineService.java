@@ -48,7 +48,7 @@ public class TimelineService {
         List<Subscription> subscriptions = subscriptionRepository.findBySubscriberName(subscriberName);
         Map<String, List<String>> groups = subscriptions.stream()
                 .collect(groupingBy(
-                        sub -> sub.getCreator().getServer(),
+                        sub -> Optional.ofNullable(sub.getCreator().getServer()).orElse(""),
                         mapping(
                                 sub -> sub.getCreator().getUsername(),
                                 toList()
