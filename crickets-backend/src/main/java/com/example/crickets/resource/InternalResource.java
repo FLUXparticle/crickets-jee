@@ -1,5 +1,6 @@
 package com.example.crickets.resource;
 
+import com.example.crickets.client.InternalServiceClient;
 import com.example.crickets.data.*;
 import com.example.crickets.service.*;
 import jakarta.inject.*;
@@ -9,14 +10,14 @@ import jakarta.ws.rs.core.*;
 @Path("/internal")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class InternalResource {
+public class InternalResource implements InternalServiceClient {
 
     @Inject
     private ProfileService profileService;
 
     @POST
     @Path("/subscribe")
-    public Response subscribe(SubscribeRequest request) {
+    public SubscribeResponse subscribe(SubscribeRequest request) {
         SubscribeResponse data = new SubscribeResponse();
 
         try {
@@ -29,7 +30,7 @@ public class InternalResource {
             data.setError(e.getMessage());
         }
 
-        return Response.ok(data).build();
+        return data;
     }
 
     // SubscribeRequest DTO
