@@ -1,5 +1,6 @@
 package com.example.crickets.service;
 
+import com.example.crickets.client.RemoteEJBClient;
 import com.example.crickets.config.*;
 import com.example.crickets.data.*;
 import com.example.crickets.repository.*;
@@ -8,6 +9,7 @@ import jakarta.inject.*;
 
 import java.util.*;
 import java.util.Map.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Collections.*;
 import static java.util.stream.Collectors.*;
@@ -32,6 +34,8 @@ public class TimelineService {
 
     @Inject
     private ServerConfig serverConfig;
+
+    private final Map<String, TimelineRemoteService> remoteClients = new ConcurrentHashMap<>();
 
     /**
      * Liefert Updates für einen Abonnenten, indem Posts von lokalen und entfernten Servern gesammelt werden.
@@ -66,7 +70,7 @@ public class TimelineService {
                 if (clientID == null) {
                     clientID = channelMaster.registerClient(postChannel);
                 }
-                // TODO listenToTimelineRemote(server, creatorNames, clientID);
+                listenToTimelineRemote(server, creatorNames, clientID);
             }
         }
     }
@@ -77,8 +81,36 @@ public class TimelineService {
         }
     }
 
+    /**
+     * Stellt eine Verbindung zu einem Remote-Server her und abonniert Updates.
+     *
+     * @param server       Remote-Server-Adresse.
+     * @param creatorNames Namen der Ersteller, deren Updates abonniert werden sollen.
+     * @param channelID    PostChannel für Post-Updates.
+     */
+    public void listenToTimelineRemote(String server, List<String> creatorNames, String channelID) {
+        try {
+            TimelineRemoteService client = getRemoteClient(server);
+            String sender = String.valueOf(serverConfig.getPort());
+            client.listenToTimeline(sender, creatorNames, channelID);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean sendTimelineUpdateLocal(Post post, String channelID) {
         return channelMaster.sendToClient(channelID, post);
+    }
+
+    public boolean sendTimelineUpdateRemote(String server, Post post, String channelID) {
+        try {
+            TimelineRemoteService client = getRemoteClient(server);
+            return client.sendTimelineUpdate(post, channelID);
+        } catch (Exception e) {
+            e.printStackTrace();
+            // TODO postChannel.accept(new Post(null, e.getMessage()));
+            return false;
+        }
     }
 
     /**
@@ -142,6 +174,32 @@ public class TimelineService {
             // TimelineServiceRemote client = getRemoteClient(server);
             // client.likePost(postID, username);
         }
+    }
+
+    /**
+     * Erzeugt oder holt einen Remote-EJB-Client für den angegebenen Server.
+     *
+     * @param server Remote-Server-Adresse.
+     * @return Remote EJB-Client.
+     */
+    private TimelineRemoteService getRemoteClient(String server) throws Exception {
+        TimelineRemoteService client = remoteClients.get(server);
+        if (client == null) {
+            int remotePort = Integer.parseInt(server);
+            RemoteEJBClient ejbClient = new RemoteEJBClient(
+                    "localhost",
+                    remotePort,
+                    "",
+                    "ROOT",
+                    "TimelineRemoteServiceImpl",
+                    "com.example.crickets.service.TimelineRemoteService"
+            );
+            System.out.println("Client lookup ...");
+            client = ejbClient.lookup();
+            remoteClients.put(server, client);
+        }
+
+        return client;
     }
 
 }

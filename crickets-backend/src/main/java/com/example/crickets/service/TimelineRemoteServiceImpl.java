@@ -7,7 +7,8 @@ import jakarta.inject.*;
 import java.util.*;
 
 @Stateless
-public class TimelineRemoteServiceImpl {
+@Remote(TimelineRemoteService.class)
+public class TimelineRemoteServiceImpl implements TimelineRemoteService {
 
     @Inject
     private TimelineService timelineService;
@@ -22,7 +23,7 @@ public class TimelineRemoteServiceImpl {
     public void listenToTimeline(String sender, List<String> creatorNames, String clientID) throws Exception {
         System.out.println("Listening to creators: " + creatorNames);
         timelineService.listenToTimelineLocal(creatorNames, post -> {
-            return false; // TODO timelineService.sendTimelineUpdateRemote(sender, post, clientID);
+            return timelineService.sendTimelineUpdateRemote(sender, post, clientID);
         });
     }
 
