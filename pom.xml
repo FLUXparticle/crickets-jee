@@ -14,6 +14,7 @@
         <module>crickets-backend</module>
         <module>crickets-frontend</module>
         <module>crickets-deployment</module>
+        <module>crickets-broker</module>
     </modules>
 
     <properties>

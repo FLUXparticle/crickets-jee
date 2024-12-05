@@ -47,6 +47,8 @@
                         <layer>jaxrs</layer>
                         <layer>microprofile-rest-client</layer>
                         <layer>ejb</layer>
+                        <layer>embedded-activemq</layer>
+                        <layer>remote-activemq</layer>
 <!--                        <layer>cdi</layer>-->
 <!--                        <layer>management</layer>-->
                     </layers>
@@ -57,6 +59,7 @@
                         <cli-session>
                             <script-files>
                                 <script>scripts/authentication.cli</script>
+                                <script>scripts/configure-jms-client.cli</script>
                             </script-files>
                         </cli-session>
                     </cli-sessions>
