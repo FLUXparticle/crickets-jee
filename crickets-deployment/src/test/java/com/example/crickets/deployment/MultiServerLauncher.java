@@ -9,8 +9,8 @@ public class MultiServerLauncher {
         // Konfigurationen für die Server
         Map<String, Integer> serverConfigs = new HashMap<>();
         serverConfigs.put("Server1", 8081);
-        serverConfigs.put("Server2", 8082);
-        serverConfigs.put("Server3", 8083);
+//        serverConfigs.put("Server2", 8082);
+//        serverConfigs.put("Server3", 8083);
 
         for (Map.Entry<String, Integer> entry : serverConfigs.entrySet()) {
             String serverName = entry.getKey();

@@ -8,7 +8,7 @@ import org.jboss.logging.*;
     activationConfig = {
         @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/queue/test"),
         @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "jakarta.jms.Queue"),
-        @ActivationConfigProperty(propertyName = "connectionFactoryLookup", propertyValue = "java:/RemoteConnectionFactory")
+        @ActivationConfigProperty(propertyName = "connectionFactoryLookup", propertyValue = "java:jms/RemoteConnectionFactory")
     }
 )
 public class MyMessageDrivenBean implements MessageListener {
