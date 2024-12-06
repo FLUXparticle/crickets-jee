@@ -40,7 +40,9 @@ public class MultiServerLauncher {
         ProcessBuilder processBuilder = new ProcessBuilder(
                 "java", "-jar",
                 jarPath.toAbsolutePath().toString(),
-                "-Djboss.http.port=" + port
+                "-Djboss.http.port=" + port,
+                "-Djboss.messaging.connector.host=localhost",
+                "-Djboss.messaging.connector.port=8080"
         );
 
         processBuilder.directory(directory.toFile()); // Arbeitsverzeichnis

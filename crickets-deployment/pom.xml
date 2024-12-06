@@ -47,8 +47,9 @@
                         <layer>jaxrs</layer>
                         <layer>microprofile-rest-client</layer>
                         <layer>ejb</layer>
-                        <layer>embedded-activemq</layer>
+<!--                        <layer>embedded-activemq</layer>-->
                         <layer>remote-activemq</layer>
+<!--                        <layer>messaging-activemq</layer>-->
 <!--                        <layer>cdi</layer>-->
 <!--                        <layer>management</layer>-->
                     </layers>

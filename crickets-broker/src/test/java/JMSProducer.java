@@ -2,7 +2,6 @@ import jakarta.jms.*;
 
 import javax.naming.*;
 import java.util.*;
-import java.util.concurrent.*;
 
 public class JMSProducer {
 
@@ -25,6 +24,7 @@ public class JMSProducer {
             context.createProducer().send(destination, "Hello, JMS2!");
             System.out.println("Nachricht gesendet.");
 
+/*
             JMSConsumer consumer = context.createConsumer(destination);
             consumer.setMessageListener(message -> {
                 System.out.println("message = " + message.getClass().getName());
@@ -36,8 +36,9 @@ public class JMSProducer {
                     }
                 }
             });
+*/
 
-            TimeUnit.SECONDS.sleep(5);
+//            TimeUnit.SECONDS.sleep(5);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -3,17 +3,18 @@
 
 # Socket-Binding für den Remote-Broker hinzufügen
 # /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-broker:add(host=localhost,port=8080)
-/socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-artemis:add(host=localhost,port=8080)
+## /socket-binding-group=standard-sockets/remote-destination-outbound-socket-binding=remote-artemis:add(host=localhost,port=8080)
 
 # Remote-Connector hinzufügen (auf den anderen Server auf localhost:8080 zeigen)
 # /subsystem=messaging-activemq/server=default/remote-connector=remote-broker:add(socket-binding=remote-broker)
-/subsystem=messaging-activemq/server=default/remote-connector=remote-artemis:add(socket-binding=remote-artemis)
+## /subsystem=messaging-activemq/server=default/remote-connector=remote-artemis:add(socket-binding=remote-artemis)
 
 # Pooled Connection Factory konfigurieren
 # /subsystem=messaging-activemq/server=default/pooled-connection-factory=remoteConnectionFactory:add(connectors=[remote-broker],entries=["java:/jms/RemoteConnectionFactory"])
 # /subsystem=messaging-activemq/server=default/pooled-connection-factory=RemoteConnectionFactory:add(entries=["java:/RemoteConnectionFactory","java:jboss/exported/jms/RemoteConnectionFactory"],connectors=["http-connector"])
 # /subsystem=messaging-activemq/server=default/pooled-connection-factory=RemoteConnectionFactory:add(entries=["java:/RemoteConnectionFactory","java:jboss/exported/jms/RemoteConnectionFactory"],connectors=["remote-broker"])
-/subsystem=messaging-activemq/server=default/pooled-connection-factory=remote-artemis:add(connectors=[remote-artemis], entries=[java:/jms/remoteCF])
+# /subsystem=messaging-activemq/server=default/pooled-connection-factory=remote-artemis:add(connectors=[remote-artemis], entries=[java:/jms/remoteCF])
+## /subsystem=messaging-activemq/server=default/connection-factory=MyConnectionFactory:add(connectors=["remote-artemis"], entries=["java:/jms/MyConnectionFactory"])
 
 # JMS-Queue hinzufügen (falls benötigt)
 # /subsystem=messaging-activemq/server=default/jms-queue=testQueue:add(entries=["java:/jms/queue/test", "java:jboss/exported/jms/queue/test"])
